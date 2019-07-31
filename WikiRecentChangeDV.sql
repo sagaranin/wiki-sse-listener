@@ -30,29 +30,29 @@ DIRECT;
 CREATE table if NOT EXISTS otus.wiki_recentchange_ods (
 	meta_id 			VARCHAR(36) NOT NULL, 
 	meta_uri			VARCHAR(1000), 
-	meta_request_id		VARCHAR(36), 
+	meta_request_id			VARCHAR(36), 
 	meta_dt				TIMESTAMP NOT NULL, 
 	meta_domain			VARCHAR(255), 
 	meta_stream			VARCHAR(255), 
-	id 					NUMBER, 
+	id 				NUMBER, 
 	c_type 				VARCHAR(20), 
 	title 				VARCHAR(1000), 
 	namespace 			NUMBER, 
 	comment 			VARCHAR(10000), 
-	parsedcomment		VARCHAR(10000),
-	ts					TIMESTAMP,
+	parsedcomment			VARCHAR(10000),
+	ts				TIMESTAMP,
 	username			VARCHAR(255),
-	bot					BOOLEAN,
+	bot				BOOLEAN,
 	server_url			VARCHAR(255),
 	server_name			VARCHAR(255),
-	server_script_path	VARCHAR(255),
+	server_script_path		VARCHAR(255),
 	wiki				VARCHAR(255),
 	minor				BOOLEAN,
 	patrolled			BOOLEAN,
 	length_old			NUMBER,
 	length_new			NUMBER,
-	revision_old		NUMBER,
-	revision_new		NUMBER,
+	revision_old			NUMBER,
+	revision_new			NUMBER,
 	PRIMARY KEY (meta_id) ENABLED
 )
 ORDER BY meta_dt, meta_domain
@@ -66,29 +66,29 @@ INSERT into otus.wiki_recentchange_ods
 SELECT DISTINCT
 	meta_id				::varchar, 
 	meta_uri			::varchar, 
-	meta_request_id		::varchar, 
+	meta_request_id			::varchar, 
 	meta_dt				::timestamp, 
 	meta_domain			::varchar, 
 	meta_stream			::varchar, 
-	id					::number, 
+	id				::number, 
 	type				::varchar, 
 	title				::varchar, 
 	namespace			::number, 
 	comment				::varchar, 
-	parsedcomment		::varchar,
+	parsedcomment			::varchar,
 	"timestamp"			::timestamp,
 	"user"				::varchar,
-	bot					::boolean,
+	bot				::boolean,
 	server_url			::varchar,
 	server_name			::varchar,
-	server_script_path	::varchar,
+	server_script_path		::varchar,
 	wiki				::varchar,
 	minor				::boolean,
 	patrolled			::boolean,
 	length_old			::number,
 	length_new			::number,
-	revision_old		::number,
-	revision_new		::number
+	revision_old			::number,
+	revision_new			::number
 FROM wiki_recentchange_stg 
 	WHERE meta_id NOT IN (SELECT meta_id FROM wiki_recentchange_ods); -- исключаем повторное добавление имеющихся данных
 
@@ -121,9 +121,9 @@ FROM wiki_recentchange_ods
 -- DROP table otus.sat_recentchange_props;
 CREATE TABLE IF NOT EXISTS otus.sat_recentchange_props (
 	--
-	hk_meta_id 			NUMBER NOT NULL, 		-- hash(business_key)
+	hk_meta_id 			NUMBER NOT NULL, 	-- hash(business_key)
 	load_ts 			TIMESTAMP NOT NULL, 	-- load time
-	hashdiff 			NUMBER NOT NULL,		-- hash([props])
+	hashdiff 			NUMBER NOT NULL,	-- hash([props])
 	--
 	meta_dt				TIMESTAMP NOT NULL, 
 	meta_domain			VARCHAR(255), 
