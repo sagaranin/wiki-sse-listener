@@ -2,8 +2,9 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Docker Build') {
             steps {
+                sh 'mvn clean install'
                 sh 'cd deploy && docker build -t sagaranin/wiki-sse-listener:latest -t sagaranin/wiki-sse-listener:${BUILD_NUMBER} .'
             }
         }
