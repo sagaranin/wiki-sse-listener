@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiki-sse-listener
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy: 
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: wiki-sse-listener
+      env: prod
+  template:
+    metadata:
+      name: wiki-sse-listener
+      labels:
+        app: wiki-sse-listener
+        env: prod
+    spec:
+      containers:
+      - name: wiki-sse-listener
+        image: sagaranin/wiki-sse-listener:latest
+        envFrom:
+        - prefix: ""
+        ports:
+        - containerPort: 8080

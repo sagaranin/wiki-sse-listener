@@ -1,12 +1,16 @@
 package ru.larnerweb.wikisselistener.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.larnerweb.wikisselistener.entitiy.WikiEvent;
 import ru.larnerweb.wikisselistener.repository.WikiEventRepository;
 
 import java.io.IOException;
+import java.util.Date;
 
+@Log4j2
 @Service
 public class WikiEventService {
 
@@ -20,13 +24,16 @@ public class WikiEventService {
         WikiEvent event;
         try {
             event = parser.parse(jsonString);
-
-            if (!wikiEventRepository.existsById(event.getId()))
-                wikiEventRepository.save(event);
+            wikiEventRepository.save(event);
 
         } catch (IOException e) {
-//            e.printStackTrace();
-            System.out.println(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
+        } catch (DataIntegrityViolationException e){
+            log.error("Record already exists");
         }
+    }
+
+    public Date getMaxDt() {
+        return wikiEventRepository.findMaxDt();
     }
 }
