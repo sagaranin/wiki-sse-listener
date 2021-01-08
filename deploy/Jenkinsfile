@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh 'mvn clean install'
                 sh 'cp target/*.jar deploy/app.jar'
-                sh 'cd deploy && docker build -t sagaranin/wiki-sse-listener:latest -t sagaranin/wiki-sse-listener:${BUILD_NUMBER} .'
+                sh 'cd deploy && docker build -t sagaranin/wiki-sse-listener:latest .'
             }
         }
         stage('Docker Login') {
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push sagaranin/wiki-sse-listener:latest; docker push sagaranin/wiki-sse-listener:${BUILD_NUMBER}'
+                sh 'docker push sagaranin/wiki-sse-listener:latest'
             }
         }
     }

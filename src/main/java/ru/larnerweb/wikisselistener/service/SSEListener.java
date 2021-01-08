@@ -49,7 +49,7 @@ public class SSEListener {
     @Scheduled(fixedRate = 60000)
     private void checkStreamStatus() {
         if (sub.isDisposed()) {
-            log.warn(" Recreate WebClient...");
+            log.warn("Recreate WebClient...");
             consumeServerSentEvent();
         }
     }
