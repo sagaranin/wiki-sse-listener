@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn clean install'
+                sh 'cp target/*.jar deploy/app.jar'
                 sh 'cd deploy && docker build -t sagaranin/wiki-sse-listener:latest -t sagaranin/wiki-sse-listener:${BUILD_NUMBER} .'
             }
         }
