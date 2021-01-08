@@ -1,16 +1,13 @@
 pipeline {
 
-    agent { any }
-
+    agent any
     stages {
-
-        stage('Docker Build') {
+        stage('Build') {
             steps {
                 sh 'mvn clean install'
                 sh 'cd deploy && docker build -t sagaranin/wiki-sse-listener:latest -t sagaranin/wiki-sse-listener:${BUILD_NUMBER} .'
             }
         }
-
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_sagaranin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -18,12 +15,10 @@ pipeline {
                 }
             }
         }
-
         stage('Docker Push') {
             steps {
                 sh 'docker push sagaranin/wiki-sse-listener:latest; docker push sagaranin/wiki-sse-listener:${BUILD_NUMBER}'
             }
         }
-
     }
 }
