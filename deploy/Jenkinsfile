@@ -10,12 +10,17 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_sagaranin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
                 }
             }
         }
 
+        stage('Docker Push') {
+            steps {
+                sh 'docker push sagaranin/wiki-sse-listener:latest; docker push sagaranin/wiki-sse-listener:${BUILD_NUMBER}'
+            }
+        }
 
     }
 }
