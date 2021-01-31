@@ -21,7 +21,5 @@ spec:
       containers:
       - name: wiki-sse-listener
         image: sagaranin/wiki-sse-listener:latest
-        envFrom:
-        - prefix: ""
         ports:
         - containerPort: 8080
