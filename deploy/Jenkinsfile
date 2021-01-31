@@ -21,5 +21,11 @@ pipeline {
                 sh 'docker push sagaranin/wiki-sse-listener:latest'
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'scp deploy/wiki-sse-listener-deployment.yaml root@master:/deployments'
+                sh 'ssh root@master kubectl apply -f /deployments/wiki-sse-listener-deployment.yaml'
+            }
+        }
     }
 }
