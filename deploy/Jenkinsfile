@@ -18,13 +18,12 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push sagaranin/wiki-sse-listener:latest'
+                sh 'docker push sagaranin/wiki-sse-listener:${BUILD_NUMBER}'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'scp deploy/wiki-sse-listener-deployment.yaml root@master:/deployments'
-                sh 'ssh root@master kubectl replace -f /deployments/wiki-sse-listener-deployment.yaml'
+                sh 'kubectl replace -f wiki-sse-listener-deployment.yaml'
             }
         }
     }

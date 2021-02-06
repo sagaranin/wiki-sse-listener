@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
       - name: wiki-sse-listener
-        image: sagaranin/wiki-sse-listener:latest
+        image: sagaranin/wiki-sse-listener:$(BUILD_NUMBER)
         ports:
         - containerPort: 8080
