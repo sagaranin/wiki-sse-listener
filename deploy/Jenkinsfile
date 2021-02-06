@@ -23,7 +23,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'cd deploy && kubectl replace -f wiki-sse-listener-deployment.yaml'
+                sh "cd deploy && sed 's/BUILD_NUMBER/${BUILD_NUMBER}/g' wiki-sse-listener-deployment.yaml"
+                sh 'kubectl apply -f wiki-sse-listener-deployment.yaml'
             }
         }
     }
