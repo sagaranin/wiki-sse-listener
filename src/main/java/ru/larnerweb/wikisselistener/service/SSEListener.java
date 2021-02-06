@@ -37,8 +37,7 @@ public class SSEListener {
                 .uri("/recentchange?since=" + sinceDate)
                 .retrieve()
                 .bodyToFlux(type)
-                .filter(s -> s.data() != null && s.data().contains("},\"id\""))
-                ;
+                .filter(s -> s.data() != null && s.data().contains("},\"id\""));
 
         sub = eventStream.subscribe(
                 content -> wikiEventService.process(content.data()),
