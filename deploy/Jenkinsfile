@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'scp deploy/wiki-sse-listener-deployment.yaml root@master:/deployments'
-                sh 'ssh root@master kubectl apply -f /deployments/wiki-sse-listener-deployment.yaml'
+                sh 'ssh root@master kubectl replace -f /deployments/wiki-sse-listener-deployment.yaml'
             }
         }
     }
