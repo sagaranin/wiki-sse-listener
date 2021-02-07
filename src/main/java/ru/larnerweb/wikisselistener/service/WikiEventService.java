@@ -19,6 +19,7 @@ public class WikiEventService {
 
     Counter eventCounter = Metrics.counter("app.event.counter.consumed");
     Counter errorCounter = Metrics.counter("app.event.counter.error");
+    Counter exceptionCounter = Metrics.counter("app.event.counter.exception");
 
     @Autowired
     WikiEventRepository wikiEventRepository;
@@ -36,6 +37,7 @@ public class WikiEventService {
             wikiEventRepository.save(event);
 
         } catch (IOException e) {
+            exceptionCounter.increment();
             log.error(e.getLocalizedMessage());
         } catch (DataIntegrityViolationException e){
             errorCounter.increment();
