@@ -11,21 +11,26 @@ import ru.larnerweb.wikisselistener.entitiy.WikiEvent;
 import ru.larnerweb.wikisselistener.repository.WikiEventRepository;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 @Log4j2
 @Service
 public class WikiEventService {
-
-    Counter eventCounter = Metrics.counter("app.event.counter.consumed");
-    Counter errorCounter = Metrics.counter("app.event.counter.error");
-    Counter exceptionCounter = Metrics.counter("app.event.counter.exception");
+    String hostname = InetAddress.getLocalHost().getHostName();
+    Counter eventCounter = Metrics.counter("app.event.counter.consumed", "host", hostname);
+    Counter errorCounter = Metrics.counter("app.event.counter.error", "host", hostname);
+    Counter exceptionCounter = Metrics.counter("app.event.counter.exception",  "host", hostname);
 
     @Autowired
     WikiEventRepository wikiEventRepository;
 
     @Autowired
     JSONParserService parser;
+
+    public WikiEventService() throws UnknownHostException {
+    }
 
     @Timed
     public void process(String jsonString){
