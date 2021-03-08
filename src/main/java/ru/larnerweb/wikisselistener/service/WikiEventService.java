@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.larnerweb.wikisselistener.entitiy.WikiEvent;
@@ -12,10 +13,12 @@ import java.util.Date;
 
 @Log4j2
 @Service
-@AllArgsConstructor
 public class WikiEventService {
 
+    @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Autowired
     private ObjectMapper mapper;
 
     private Date lastDate = new Date(1552057576);
