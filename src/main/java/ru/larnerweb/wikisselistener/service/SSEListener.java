@@ -41,11 +41,11 @@ public class SSEListener {
 
         sub = eventStream.subscribe(
                 content -> wikiEventService.process(content.data()),
-                error -> log.error("Error receiving SSE: {}", error.toString()),
+                error -> log.warn("Error receiving SSE: {}", error.toString()),
                 () -> log.info("Completed!!!"));
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 1000)
     private void checkStreamStatus() {
         if (sub.isDisposed()) {
             log.warn("Recreate WebClient...");

@@ -30,6 +30,6 @@ public class WikiEventService {
     }
 
     public Date getMaxDt() {
-        return lastDate;
+        return new Date();
     }
 }
