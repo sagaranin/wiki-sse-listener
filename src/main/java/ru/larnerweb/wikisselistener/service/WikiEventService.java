@@ -26,7 +26,7 @@ public class WikiEventService {
     public void process(String jsonString){
         WikiEvent event = mapper.readValue(jsonString, WikiEvent.class);
         lastDate = event.getMeta().getDt();
-        kafkaTemplate.send("wiki-src", jsonString);
+        kafkaTemplate.send("wiki-src", String.valueOf(event.getId()), jsonString);
     }
 
     public Date getMaxDt() {
